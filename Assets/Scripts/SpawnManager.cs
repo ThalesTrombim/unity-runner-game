@@ -5,7 +5,7 @@ using UnityEngine;
 public class SpawnManager : MonoBehaviour
 {
   public GameObject[] obstaclesPrefab;
-  private Vector3 spawnPos = new Vector3(25, 0, 0);
+  private Vector3 spawnPos = new Vector3(30, 0, 0);
   //public float startDelay = 2f;
   //public float repeatRate = 2f;
   private IEnumerator courountine;
@@ -26,13 +26,16 @@ public class SpawnManager : MonoBehaviour
     while(true)
     {
       CreateObstacle();
-      yield return new WaitForSeconds(3f);
+      yield return new WaitForSeconds(GameController.timeToSpawn);
     }
   }
 
   private void CreateObstacle()
   {
-    GameObject obstacle = obstaclesPrefab[Random.Range(0, obstaclesPrefab.Length)];
-    Instantiate(obstacle, spawnPos, obstacle.transform.rotation);
+    if (!GameController.gameOver)
+    {
+      GameObject obstacle = obstaclesPrefab[Random.Range(0, obstaclesPrefab.Length)];
+      Instantiate(obstacle, spawnPos, obstacle.transform.rotation);
+    }
   } 
 }
